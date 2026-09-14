@@ -23,5 +23,5 @@
             echo (sqlsrv_errors());
     } 
     else{
-        echo "Hashes don't match, security breach"
+        echo "Hashes don't match, security breach";
     }
