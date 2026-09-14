@@ -17,7 +17,7 @@
         echo (sqlsrv_errors());
 
     while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
-     $data = ['id' = $row['FishID'], 'name' = $row['FishName'], 'scale' = $row['FishScale'],'color' = $row['FishColor']];
+     $data = ['id' => $row['FishID'], 'name' => $row['FishName'], 'scale' => $row['FishScale'],'color' => $row['FishColor']];
      //header('Content-Type: application/json');
      //echo json_encode($data);
      echo $data;
