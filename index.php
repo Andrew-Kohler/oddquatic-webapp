@@ -16,14 +16,11 @@
     if ($getResults == FALSE)
         echo (sqlsrv_errors());
 
-    $returnData[]; 
     while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
      $data = ['id' => $row['FishID'], 'name' => $row['FishName'], 'scale' => $row['FishScale'],'color' => $row['FishColor']];
-     $returnData[] = json_encode($data);
-     // echo json_encode($data);
-     // echo $data;
+     header('Content-Type: application/json');
+     echo json_encode($data);
+     //echo $data;
     }
-    header('Content-Type: application/json');
-    echo json_encode($returnData);
     sqlsrv_free_stmt($getResults);
 
