@@ -16,7 +16,9 @@
     if ($getResults == FALSE)
         echo (sqlsrv_errors());
     while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
-     echo ($row['FishName'] . " " . $row['FishScale'] . " " . $row['FishColor'] . PHP_EOL);
+     $data = ['FishID' = $row['FishID'], 'FishName' = $row['FishName'], 'FishScale' = $row['FishScale'],'FishColor' = $row['FishColor']]
+     header('Content-Type: application/json; charset=utf-8');
+     echo json_encode($data);
     }
     sqlsrv_free_stmt($getResults);
 
