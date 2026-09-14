@@ -1,7 +1,3 @@
-<!-- <?php
-
-echo "Hello World!"; -->
-
 <?php
     $serverName = "oddquatic-db-server-333.database.windows.net"; // update me
     $connectionOptions = array(
