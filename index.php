@@ -24,4 +24,4 @@ echo "Hello World!"; -->
      echo ($row['FishName'] . " " . $row['FishScale'] . PHP_EOL);
     }
     sqlsrv_free_stmt($getResults);
-?>
+
