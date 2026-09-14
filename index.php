@@ -13,11 +13,10 @@
 
     $tsql= "SELECT * FROM dbo.Fish";
     $getResults= sqlsrv_query($conn, $tsql);
-    echo ("Reading data from table" . PHP_EOL);
     if ($getResults == FALSE)
         echo (sqlsrv_errors());
     while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
-     echo ($row['FishName'] . " " . $row['FishScale'] . PHP_EOL);
+     echo ($row['FishName'] . " " . $row['FishScale'] . " " . $row['FishColor'] .PHP_EOL);
     }
     sqlsrv_free_stmt($getResults);
 
