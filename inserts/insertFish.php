@@ -1,4 +1,11 @@
 <?php
+
+    register_shutdown_function(function () {
+    $last_error = error_get_last();
+    if ($last_error && in_array($last_error['type'], [E_ERROR, E_PARSE, E_COMPILE_ERROR, E_CORE_ERROR]))
+        header('HTTP/1.1 500 Terrible Internal Server Error', TRUE, 500);
+    });
+
     $serverName = "oddquatic-db-server-333.database.windows.net"; 
     $connectionOptions = array(
         "Database" => "oddquatic-resourcedb-333", 
