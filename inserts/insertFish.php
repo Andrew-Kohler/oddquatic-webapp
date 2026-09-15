@@ -19,7 +19,7 @@
         // Set up our statement now that we understand what we're passing in
         $tsql= "INSERT INTO dbo.Fish VALUES (" . $_POST['name'] . ",". $_POST['scale'] . ",". $_POST['color'] . ")";
         $getResults= sqlsrv_query($conn, $tsql);
-
+        echo "We did it?";
         if ($getResults == FALSE)
             echo (serialize(sqlsrv_errors()));
     } 
