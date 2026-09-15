@@ -1,18 +1,13 @@
 <?php
-
-    register_shutdown_function(function () {
-    $last_error = error_get_last();
-    if ($last_error && in_array($last_error['type'], [E_ERROR, E_PARSE, E_COMPILE_ERROR, E_CORE_ERROR]))
-        header('HTTP/1.1 500 Terrible Internal Server Error', TRUE, 500);
-    });
-
+    // Connection details for our server - where to find it, which database we want to open, and the username/password for it
     $serverName = "oddquatic-db-server-333.database.windows.net"; 
     $connectionOptions = array(
         "Database" => "oddquatic-resourcedb-333", 
         "Uid" => "CloudSAe6d5ed3e", 
         "PWD" => "xojoannaxo33+" 
     );
-    //Establishes the connection
+
+    //Establishes the connection, print errors if it's a miss
     $conn = sqlsrv_connect($serverName, $connectionOptions);
     if( $conn === false ) {
      die( print_r( sqlsrv_errors(), true));
@@ -31,5 +26,5 @@
             echo (serialize(sqlsrv_errors()));
     } 
     else{
-        echo "Hashes don't match, security breach";
+        echo "Hashes don't match, security breach"; // A little dramatic and not especially useful, but still true!
     }
