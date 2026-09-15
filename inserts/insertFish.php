@@ -12,10 +12,10 @@
     }
 
     $secretKey = "Kongllelujah"; // Secret key to allow for match test
-    $realHash = md5($_GET['name'] . $_GET['scale'] . $_GET['color'] . $secretKey); // Make an MD5 hash with the given data - it should match up to the hash
+    $realHash = md5($_POST['name'] . $_POST['scale'] . $_POST['color'] . $secretKey); // Make an MD5 hash with the given data - it should match up to the hash
 
     // If our hash matches, our keys match, and we have verified that the request came from a legitimate client and we can proceed with insertion
-    if($realHash == $_GET['hash'] ) { 
+    if($realHash == $_POST['hash'] ) { 
         // Set up our statement now that we understand what we're passing in
         $tsql= "INSERT INTO dbo.Fish VALUES (:name, :scale, :color)";
         $getResults= sqlsrv_query($conn, $tsql);
