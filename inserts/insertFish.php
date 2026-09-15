@@ -21,7 +21,7 @@
         $getResults= sqlsrv_query($conn, $tsql);
 
         if ($getResults == FALSE)
-            echo (sqlsrv_errors());
+            echo (serialize(sqlsrv_errors()));
     } 
     else{
         echo "Hashes don't match, security breach";
