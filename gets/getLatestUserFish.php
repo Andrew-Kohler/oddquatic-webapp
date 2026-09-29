@@ -14,7 +14,7 @@
     }
 
     $secretKey = "Kongllelujah"; // Secret key to allow for match test
-    $realHash = md5($_POST['username'] . $secretKey); // Make an MD5 hash with the given data - it should match up to the hash
+    $realHash = md5($_POST['uid'] . $secretKey); // Make an MD5 hash with the given data - it should match up to the hash
 
     // If our hash matches, our keys match, and we have verified that the request came from a legitimate client and we can proceed with retrieval
     if($realHash == $_POST['hash'] ) { 
