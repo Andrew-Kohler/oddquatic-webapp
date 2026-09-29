@@ -50,7 +50,7 @@
                 }
 
                 // Make the first (and in this case, only) row of the result set available for reading.
-                if( sqlsrv_fetch( $stmt ) === false) {
+                if( sqlsrv_fetch( $getResults ) === false) {
                     die( print_r( sqlsrv_errors(), true));
                 }
 
