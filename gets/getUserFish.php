@@ -18,24 +18,42 @@
 
     // If our hash matches, our keys match, and we have verified that the request came from a legitimate client and we can proceed with retrieval
     if($realHash == $_POST['hash'] ) { 
-    // This query uses a subquery to first determine UserID from UserName, and then uses the recovered UserID 
         $params = [$_POST['username']];
-        $tsql= "SELECT FishID, FishName, FishScale, FishColor, UserID
+
+        // So first within here, we need to check if the username is actually real. If it's not, we provide nothing!
+        $tsql = "SELECT UserID
+                FROM dbo.Users
+                WHERE UserName = ?";
+        $getResults= sqlsrv_query($conn, $tsql, $params); 
+
+
+        if ($getResults == FALSE) { // If we find no results, we just add this user to the database and return nothing
+            $tsql = "INSERT INTO dbo.Users
+                VALUES(?, 0)";
+            $getResults= sqlsrv_query($conn, $tsql, $params); 
+            if ($getResults == FALSE)
+                echo (serialize(sqlsrv_errors()));
+        }
+
+        else {
+        // This query uses a subquery to first determine UserID from UserName, and then uses the recovered UserID 
+            $tsql= "SELECT FishID, FishName, FishScale, FishColor, UserID
                 FROM dbo.Fish
                 WHERE UserID =
                     (SELECT UserID
                     FROM dbo.Users
                     WHERE UserName = ?)";
-        $getResults= sqlsrv_query($conn, $tsql, $params); 
-        if ($getResults == FALSE)
-            echo (serialize(sqlsrv_errors()));
+            $getResults= sqlsrv_query($conn, $tsql, $params); 
+            if ($getResults == FALSE)
+                echo (serialize(sqlsrv_errors()));
 
-        // Echo back each found row formatted as JSON
-        while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
-            // We now return the User ID as part of the fish data :D
-            $data = ['id' => $row['FishID'], 'name' => $row['FishName'], 'scale' => $row['FishScale'],'color' => $row['FishColor'], 'userID' => $row['UserID']];
-            header('Content-Type: application/json');
-            echo json_encode($data) . ','; // Additional formatting to help Unity parse the data
+            // Echo back each found row formatted as JSON
+            while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
+                // We now return the User ID as part of the fish data :D
+                $data = ['id' => $row['FishID'], 'name' => $row['FishName'], 'scale' => $row['FishScale'],'color' => $row['FishColor'], 'userID' => $row['UserID']];
+                header('Content-Type: application/json');
+                echo json_encode($data) . ','; // Additional formatting to help Unity parse the data
+            }
         }
     } 
     else{
