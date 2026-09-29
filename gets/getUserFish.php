@@ -30,7 +30,7 @@
             echo (serialize(sqlsrv_errors()));
         }
 
-        else if(sqlsrv_fetch(getResults) == null) // If we find no results, we just add this user to the database and return nothing
+        else if(sqlsrv_fetch($getResults) == null) // If we find no results, we just add this user to the database and return nothing
             {
             $tsql = "INSERT INTO dbo.Users
                 VALUES(?, 0)";
