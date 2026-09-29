@@ -49,6 +49,11 @@
                     echo (serialize(sqlsrv_errors()));
                 }
 
+                // Make the first (and in this case, only) row of the result set available for reading.
+                if( sqlsrv_fetch( $stmt ) === false) {
+                    die( print_r( sqlsrv_errors(), true));
+                }
+
                 echo 'NUID' . sqlsrv_get_field( $getResults, 0); // Echo back the first field of the row we found
             }
        }
