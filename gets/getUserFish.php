@@ -32,12 +32,26 @@
 
         else if(sqlsrv_fetch($getResults) == null) // If we find no results, we just add this user to the database and return nothing
             {
-            $tsql = "INSERT INTO dbo.Users
+            $tsql = "INSERT INTO dbo.Users  
                 VALUES(?, 0)";
-            $getResults= sqlsrv_query($conn, $tsql, $params); 
-            if ($getResults == FALSE)
+            $getResults= sqlsrv_query($conn, $tsql, $params); // We insert our user into the user list
+
+            if ($getResults == FALSE){
                 echo (serialize(sqlsrv_errors()));
             }
+            else{ // Then, we get their UID and echo it back
+                $tsql = "SELECT UserID
+                      FROM dbo.Users
+                      WHERE UserName = ?";
+                $getResults= sqlsrv_query($conn, $tsql, $params); 
+
+                if ($getResults == FALSE) { 
+                    echo (serialize(sqlsrv_errors()));
+                }
+
+                echo sqlsrv_get_field( $getResults, 0); // Echo back the first field of the row we found
+            }
+       }
         else {
         // This query uses a subquery to first determine UserID from UserName, and then uses the recovered UserID 
             $tsql= "SELECT FishID, FishName, FishScale, FishColor, UserID
