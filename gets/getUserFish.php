@@ -49,7 +49,7 @@
                     echo (serialize(sqlsrv_errors()));
                 }
 
-                echo sqlsrv_get_field( $getResults, 0); // Echo back the first field of the row we found
+                echo 'NUID' . sqlsrv_get_field( $getResults, 0); // Echo back the first field of the row we found
             }
        }
         else {
