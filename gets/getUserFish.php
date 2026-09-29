@@ -32,7 +32,8 @@
 
         // Echo back each found row formatted as JSON
         while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
-            $data = ['id' => $row['FishID'], 'name' => $row['FishName'], 'scale' => $row['FishScale'],'color' => $row['FishColor']];
+            // We now return the User ID as part of the fish data :D
+            $data = ['id' => $row['FishID'], 'name' => $row['FishName'], 'scale' => $row['FishScale'],'color' => $row['FishColor'], 'userID' => $row['UserID']];
             header('Content-Type: application/json');
             echo json_encode($data) . ','; // Additional formatting to help Unity parse the data
         }
