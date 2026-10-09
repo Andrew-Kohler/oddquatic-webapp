@@ -10,8 +10,9 @@
     //Establishes the connection, print errors if it's a miss
     $conn = sqlsrv_connect($serverName, $connectionOptions);
     if( $conn === false ) {
-     die( print_r( sqlsrv_errors(), true));
+     //die( print_r( sqlsrv_errors(), true));
+        echo 'F';
     }
     else{
-        echo 'Database pinged';
+        echo 'T';
     }
