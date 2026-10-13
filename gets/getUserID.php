@@ -29,7 +29,6 @@
         if ($getResults == FALSE) { 
             echo (serialize(sqlsrv_errors()));
         }
-
         else if(sqlsrv_fetch($getResults) == null) // If we find no results, we just add this user to the database 
             {
             $tsql = "INSERT INTO dbo.Users  
@@ -58,12 +57,11 @@
             }
         }
         else {
-                // Same thing just without the extra insertion and get; make the row free to read, and then echo back the ID
-                if( sqlsrv_fetch( $getResults ) === false) {
-                    die( print_r( sqlsrv_errors(), true));
-                }
-
-                echo 'NUID' . sqlsrv_get_field( $getResults, 0); 
+            // Same thing just without the extra insertion and get; make the row free to read, and then echo back the ID
+            // if( sqlsrv_fetch( $getResults ) === false) {
+            //     die( print_r( sqlsrv_errors(), true));
+            // }
+            echo 'NUID' . sqlsrv_get_field( $getResults, 0); 
         }
     } 
     else{
