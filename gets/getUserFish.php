@@ -59,7 +59,7 @@
        }
         else {
         // This query uses a subquery to first determine UserID from UserName, and then uses the recovered UserID 
-            $tsql= "SELECT FishID, FishName, FishScale, FishColor, UserID
+            $tsql= "SELECT FishID, FishName, FishScale, FishColor, UserID, BodyType, FinType, TopfinType, EyeType, BodyColor, FinColor, TopfinColor, TailColor, EyeColor, TailType
                 FROM dbo.Fish
                 WHERE UserID =
                     (SELECT UserID
@@ -72,7 +72,9 @@
             // Echo back each found row formatted as JSON
             while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
                 // We now return the User ID as part of the fish data :D
-                $data = ['id' => $row['FishID'], 'name' => $row['FishName'], 'scale' => $row['FishScale'],'color' => $row['FishColor'], 'userID' => $row['UserID']];
+                $data = ['id' => $row['FishID'], 'name' => $row['FishName'], 'scale' => $row['FishScale'],'color' => $row['FishColor'], 'userID' => $row['UserID'],
+                'bodyPart' => $row['BodyType'], 'finPart' => $row['FinType'], 'topfinPart' => $row['TopfinType'], 'tailPart' => $row['TailType'], 'eyePart' => $row['EyeType'],
+                'bodyColor' => $row['BodyColor'], 'finColor' => $row['FinColor'], 'topfinColor' => $row['TopfinColor'], 'tailColor' => $row['TailColor'], 'eyeColor' => $row['EyeColor'],];
                 header('Content-Type: application/json');
                 echo json_encode($data) . ','; // Additional formatting to help Unity parse the data
             }

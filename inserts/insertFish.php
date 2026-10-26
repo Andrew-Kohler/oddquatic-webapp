@@ -18,9 +18,13 @@
 
     // If our hash matches, our keys match, and we have verified that the request came from a legitimate client and we can proceed with insertion
     if($realHash == $_POST['hash'] ) { 
-        $params = [$_POST['name'], $_POST['scale'], $_POST['color'], $_POST['uid']];
+        $params = [$_POST['name'], $_POST['scale'], $_POST['color'], $_POST['uid'], 
+        $_POST['bodyType'], $_POST['finType'], $_POST['topfinType'], $_POST['eyeType'], $_POST['bodyColor'], 
+        $_POST['finColor'], $_POST['topfinColor'], $_POST['tailColor'], $_POST['eyeColor'], $_POST['tailType']];
         // Set up our statement now that we understand what we're passing in
-        $tsql= "INSERT INTO dbo.Fish VALUES (?,?,?,?)";
+        $tsql= "INSERT INTO dbo.Fish VALUES (?,?,?,?,
+        ?,?,?,?,?,
+        ?,?,?,?,?)";
         $getResults= sqlsrv_query($conn, $tsql, $params);
         if ($getResults == FALSE)
             echo (serialize(sqlsrv_errors()));
