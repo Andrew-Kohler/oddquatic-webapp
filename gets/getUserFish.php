@@ -30,36 +30,11 @@
             echo (serialize(sqlsrv_errors()));
         }
 
-        else if(sqlsrv_fetch($getResults) == null) // If we find no results, we just add this user to the database and return nothing
-            {
-            $tsql = "INSERT INTO dbo.Users  
-                VALUES(?, 0)";
-            $getResults= sqlsrv_query($conn, $tsql, $params); // We insert our user into the user list
+        // PREVIOUSLY: We would do a UID search here, but no longer, as we should be guaranteed to have that UID at this point
 
-            if ($getResults == FALSE){
-                echo (serialize(sqlsrv_errors()));
-            }
-            else{ // Then, we get their UID and echo it back
-                $tsql = "SELECT UserID
-                      FROM dbo.Users
-                      WHERE UserName = ?";
-                $getResults= sqlsrv_query($conn, $tsql, $params); 
-
-                if ($getResults == FALSE) { 
-                    echo (serialize(sqlsrv_errors()));
-                }
-
-                // Make the first (and in this case, only) row of the result set available for reading.
-                if( sqlsrv_fetch( $getResults ) === false) {
-                    die( print_r( sqlsrv_errors(), true));
-                }
-
-                echo 'NUID' . sqlsrv_get_field( $getResults, 0); // Echo back the first field of the row we found
-            }
-       }
         else {
         // This query uses a subquery to first determine UserID from UserName, and then uses the recovered UserID 
-            $tsql= "SELECT FishID, FishName, FishScale, FishColor, UserID, BodyType, FinType, TopfinType, EyeType, BodyColor, FinColor, TopfinColor, TailColor, EyeColor, TailType
+            $tsql= "SELECT FishID, FishName, FishScale, UserID, BodyType, FinType, TopfinType, EyeType, BodyColor, FinColor, TopfinColor, TailColor, EyeColor, TailType
                 FROM dbo.Fish
                 WHERE UserID =
                     (SELECT UserID
@@ -72,7 +47,7 @@
             // Echo back each found row formatted as JSON
             while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
                 // We now return the User ID as part of the fish data :D
-                $data = ['id' => $row['FishID'], 'name' => $row['FishName'], 'scale' => $row['FishScale'],'color' => $row['FishColor'], 'userID' => $row['UserID'],
+                $data = ['id' => $row['FishID'], 'name' => $row['FishName'], 'scale' => $row['FishScale'], 'userID' => $row['UserID'],
                 'bodyPart' => $row['BodyType'], 'finPart' => $row['FinType'], 'topfinPart' => $row['TopfinType'], 'tailPart' => $row['TailType'], 'eyePart' => $row['EyeType'],
                 'bodyColor' => $row['BodyColor'], 'finColor' => $row['FinColor'], 'topfinColor' => $row['TopfinColor'], 'tailColor' => $row['TailColor'], 'eyeColor' => $row['EyeColor'],];
                 header('Content-Type: application/json');

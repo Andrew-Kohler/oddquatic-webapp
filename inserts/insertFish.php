@@ -14,11 +14,11 @@
     }
 
     $secretKey = "Kongllelujah"; // Secret key to allow for match test
-    $realHash = md5($_POST['name'] . $_POST['scale'] . $_POST['color'] . $_POST['uid'] . $secretKey); // Make an MD5 hash with the given data - it should match up to the hash
+    $realHash = md5($_POST['name'] . $_POST['scale'] . $_POST['uid'] . $secretKey); // Make an MD5 hash with the given data - it should match up to the hash
 
     // If our hash matches, our keys match, and we have verified that the request came from a legitimate client and we can proceed with insertion
     if($realHash == $_POST['hash'] ) { 
-        $params = [$_POST['name'], $_POST['scale'], $_POST['color'], $_POST['uid'], 
+        $params = [$_POST['name'], $_POST['scale'], $_POST['uid'], 
         $_POST['bodyType'], $_POST['finType'], $_POST['topfinType'], $_POST['eyeType'], $_POST['bodyColor'], 
         $_POST['finColor'], $_POST['topfinColor'], $_POST['tailColor'], $_POST['eyeColor'], $_POST['tailType']];
         // Set up our statement now that we understand what we're passing in
