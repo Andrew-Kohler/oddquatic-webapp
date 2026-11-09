@@ -22,7 +22,7 @@
         $_POST['bodyType'], $_POST['finType'], $_POST['topfinType'], $_POST['eyeType'], $_POST['bodyColor'], 
         $_POST['finColor'], $_POST['topfinColor'], $_POST['tailColor'], $_POST['eyeColor'], $_POST['tailType']];
         // Set up our statement now that we understand what we're passing in
-        $tsql= "INSERT INTO dbo.Fish VALUES (?,?,?,?,
+        $tsql= "INSERT INTO dbo.Fish VALUES (?,?,?,
         ?,?,?,?,?,
         ?,?,?,?,?)";
         $getResults= sqlsrv_query($conn, $tsql, $params);
